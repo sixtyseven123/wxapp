@@ -1,0 +1,97 @@
+<view class="container">
+  <!-- 顶部装饰 -->
+  <view class="header-decoration">
+    <view class="decoration-circle circle-1"></view>
+    <view class="decoration-circle circle-2"></view>
+    <view class="decoration-circle circle-3"></view>
+  </view>
+  
+  <!-- Logo区域 -->
+  <view class="logo-section">
+    <view class="logo-container animate-scaleIn">
+      <view class="logo-icon">🧠</view>
+      <view class="logo-text">人格实验室</view>
+    </view>
+    <view class="slogan animate-fadeIn">2分钟看懂自己，生成专属人格报告</view>
+  </view>
+  
+  <!-- 测试类型选择 -->
+  <view class="test-cards">
+    <!-- MBTI标准版 -->
+    <view class="test-card card-primary" bindtap="startTest" data-type="mbti_full">
+      <view class="card-badge">推荐</view>
+      <view class="card-content">
+        <view class="card-icon">📊</view>
+        <view class="card-info">
+          <view class="card-title">MBTI标准版</view>
+          <view class="card-desc">93题 · 约15分钟</view>
+          <view class="card-features">
+            <text class="tag">完整维度</text>
+            <text class="tag">专业解读</text>
+          </view>
+        </view>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+    
+    <!-- MBTI快速版 -->
+    <view class="test-card" bindtap="startTest" data-type="mbti_quick">
+      <view class="card-content">
+        <view class="card-icon">⚡</view>
+        <view class="card-info">
+          <view class="card-title">MBTI快速版</view>
+          <view class="card-desc">20题 · 约3分钟</view>
+          <view class="card-features">
+            <text class="tag">快速定位</text>
+            <text class="tag">初步了解</text>
+          </view>
+        </view>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+    
+    <!-- 趣味人格测试 -->
+    <view class="test-card" bindtap="startTest" data-type="fun">
+      <view class="card-content">
+        <view class="card-icon">🎭</view>
+        <view class="card-info">
+          <view class="card-title">趣味人格测试</view>
+          <view class="card-desc">15题 · 约2分钟</view>
+          <view class="card-features">
+            <text class="tag">轻松有趣</text>
+            <text class="tag">毒舌文案</text>
+          </view>
+        </view>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+  </view>
+  
+  <!-- 底部功能入口 -->
+  <view class="bottom-actions">
+    <view class="action-item" bindtap="goToHistory">
+      <view class="action-icon">📜</view>
+      <view class="action-text">测试记录</view>
+    </view>
+    <view class="action-divider"></view>
+    <view class="action-item" bindtap="goToAbout">
+      <view class="action-icon">ℹ️</view>
+      <view class="action-text">关于我们</view>
+    </view>
+    <view class="action-divider"></view>
+    <view class="action-item" bindtap="showPrivacy">
+      <view class="action-icon">🔒</view>
+      <view class="action-text">隐私政策</view>
+    </view>
+  </view>
+  
+  <!-- 广告位 -->
+  <view class="ad-container" wx:if="{{showAd}}">
+    <ad unit-id="ad-unit-id" bindload="adLoad" binderror="adError"></ad>
+  </view>
+  
+  <!-- 底部版权 -->
+  <view class="copyright">
+    <text>人格实验室 © 2024</text>
+  </view>
+</view>

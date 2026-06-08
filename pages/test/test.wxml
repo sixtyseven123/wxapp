@@ -1,0 +1,81 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-inner">
+      <view class="back-btn" bindtap="goBack">
+        <text>‹</text>
+      </view>
+      <view class="progress-info">
+        <text class="progress-text">{{currentIndex + 1}} / {{totalQuestions}}</text>
+        <view class="progress-bar">
+          <view class="progress-inner" style="width: {{progressPercent}}%"></view>
+        </view>
+      </view>
+      <view class="test-type">{{testTypeName}}</view>
+    </view>
+  </view>
+  
+  <!-- 题目内容 -->
+  <view class="question-section">
+    <!-- 题目卡片 -->
+    <view class="question-card animate-fadeIn" wx:if="{{!isFinished}}">
+      <view class="question-type-tag" wx:if="{{isFunTest}}">
+        <text class="tag-icon">🎭</text>
+        <text>{{currentQuestion.id}}/{{totalQuestions}}</text>
+      </view>
+      
+      <view class="question-text">{{currentQuestion.text}}</view>
+    </view>
+    
+    <!-- 选项列表 -->
+    <view class="options-list" wx:if="{{!isFinished}}">
+      <view 
+        class="option-btn {{selectedIndex === index ? 'selected' : ''}} animate-fadeIn"
+        wx:for="{{currentQuestion.options}}"
+        wx:key="index"
+        bindtap="selectOption"
+        data-index="{{index}}"
+        style="animation-delay: {{index * 0.05}}s"
+      >
+        <view class="option-label">{{item.label || item.value}}</view>
+        <view class="option-text">{{item.text}}</view>
+      </view>
+    </view>
+    
+    <!-- 导航按钮 -->
+    <view class="nav-buttons" wx:if="{{!isFinished}}">
+      <button 
+        class="btn btn-secondary {{currentIndex === 0 ? 'disabled' : ''}}" 
+        bindtap="prevQuestion"
+        disabled="{{currentIndex === 0}}"
+      >
+        ‹ 上一题
+      </button>
+      
+      <button 
+        class="btn btn-primary {{selectedIndex === -1 ? 'disabled' : ''}}" 
+        bindtap="nextQuestion"
+        disabled="{{selectedIndex === -1}}"
+      >
+        {{currentIndex === totalQuestions - 1 ? '查看结果' : '下一题'}}
+      </button>
+    </view>
+    
+    <!-- 完成提示 -->
+    <view class="finish-section animate-scaleIn" wx:if="{{isFinished}}">
+      <view class="finish-icon">🎉</view>
+      <view class="finish-title">测试完成！</view>
+      <view class="finish-desc">正在为您生成专属人格报告...</view>
+      <view class="loading-dots">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 底部时间提示 -->
+  <view class="time-hint" wx:if="{{!isFinished && showTimeHint}}">
+    <text>⏱️ 已用时 {{usedTime}}</text>
+  </view>
+</view>

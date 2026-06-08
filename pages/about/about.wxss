@@ -1,0 +1,175 @@
+/* 关于页样式 */
+.container {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding: 40rpx 30rpx;
+}
+
+/* Logo区域 */
+.logo-section {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.logo-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.logo-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10rpx;
+}
+
+.logo-version {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+/* 菜单卡片 */
+.menu-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-medium);
+  padding: 0;
+  margin-bottom: 30rpx;
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 36rpx;
+  margin-right: 20rpx;
+}
+
+.menu-text {
+  font-size: 30rpx;
+  color: var(--text-primary);
+}
+
+.text-danger {
+  color: #FF6B6B;
+}
+
+.menu-arrow {
+  font-size: 36rpx;
+  color: var(--text-light);
+}
+
+.menu-divider {
+  height: 1rpx;
+  background: var(--border-color);
+  margin: 0 30rpx;
+}
+
+/* 免责声明 */
+.disclaimer {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-medium);
+  padding: 30rpx;
+  margin: 40rpx 0;
+  box-shadow: var(--shadow-light);
+}
+
+.disclaimer-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16rpx;
+}
+
+.disclaimer-text {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* 底部版权 */
+.footer {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.footer-text {
+  font-size: 22rpx;
+  color: var(--text-light);
+  margin-bottom: 8rpx;
+}
+
+/* 弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-height: 70vh;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: var(--text-light);
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 30rpx;
+  max-height: 50vh;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  box-sizing: border-box;
+}

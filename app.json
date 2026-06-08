@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/guide/guide",
+    "pages/test/test",
+    "pages/result/result",
+    "pages/history/history",
+    "pages/about/about"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#7B68EE",
+    "navigationBarTitleText": "人格实验室",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F8F8FF",
+    "backgroundTextStyle": "dark"
+  },
+  
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

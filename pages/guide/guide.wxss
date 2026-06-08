@@ -1,0 +1,212 @@
+/* 引导页样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #F8F8FF 0%, #E8E8F5 100%);
+}
+
+.header-bg {
+  position: relative;
+  height: 400rpx;
+}
+
+.bg-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200rpx;
+  background: linear-gradient(180deg, rgba(123, 104, 238, 0.1), transparent);
+  border-radius: 0 0 50% 50%;
+}
+
+/* 返回按钮 */
+.back-btn {
+  position: fixed;
+  top: 60rpx;
+  left: 30rpx;
+  width: 70rpx;
+  height: 70rpx;
+  background: var(--bg-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-light);
+  z-index: 100;
+}
+
+/* 内容区域 */
+.content-section {
+  padding: 0 40rpx 60rpx;
+  margin-top: -100rpx;
+  position: relative;
+  z-index: 10;
+}
+
+/* 测试头部 */
+.test-header {
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.test-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.test-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10rpx;
+}
+
+.test-count {
+  font-size: 28rpx;
+  color: var(--text-light);
+}
+
+/* 信息卡片 */
+.info-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-medium);
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  box-shadow: var(--shadow-light);
+}
+
+.info-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.info-title .icon {
+  margin-right: 12rpx;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item .num {
+  width: 44rpx;
+  height: 44rpx;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.info-item .text {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 44rpx;
+}
+
+/* 时长卡片 */
+.time-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-medium);
+  padding: 30rpx 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: var(--shadow-light);
+  display: flex;
+  align-items: center;
+}
+
+.time-icon {
+  font-size: 50rpx;
+  margin-right: 24rpx;
+}
+
+.time-info {
+  flex: 1;
+}
+
+.time-label {
+  font-size: 26rpx;
+  color: var(--text-light);
+  margin-bottom: 6rpx;
+}
+
+.time-value {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* 隐私协议 */
+.privacy-section {
+  margin-bottom: 40rpx;
+}
+
+.privacy-checkbox {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 10rpx;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid var(--border-color);
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+  margin-top: 4rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.checkbox.checked {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.privacy-text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.privacy-text .link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* 开始按钮 */
+.start-section {
+  padding-top: 20rpx;
+}
+
+.btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

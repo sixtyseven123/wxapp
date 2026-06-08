@@ -1,0 +1,224 @@
+<view class="container">
+  <!-- 顶部装饰 -->
+  <view class="header-bg">
+    <view class="bg-gradient"></view>
+  </view>
+  
+  <!-- 主内容 -->
+  <view class="result-content">
+    <!-- 人格类型卡片 -->
+    <view class="type-card animate-scaleIn" wx:if="{{!isFun}}">
+      <view class="type-main">
+        <view class="type-icon">{{result.icon}}</view>
+        <view class="type-letter">{{result.type}}</view>
+        <view class="type-name">{{result.name}}</view>
+        <view class="type-slogan">{{result.slogan}}</view>
+      </view>
+      <view class="type-share" bindtap="shareResult">
+        <text>分享结果</text>
+      </view>
+    </view>
+    
+    <!-- 趣味测试结果卡片 -->
+    <view class="fun-card animate-scaleIn" wx:if="{{isFun}}">
+      <view class="fun-emoji">{{result.funEmoji}}</view>
+      <view class="fun-tag">{{result.funTag}}</view>
+      <view class="fun-title">{{result.funTitle}}</view>
+      <view class="fun-desc">{{result.funDesc}}</view>
+    </view>
+    
+    <!-- 维度雷达图 (MBTI) -->
+    <view class="dimension-card card animate-fadeIn" wx:if="{{!isFun && showDimensions}}">
+      <view class="card-title">性格维度分析</view>
+      <view class="radar-container">
+        <canvas type="2d" id="radarCanvas" class="radar-canvas"></canvas>
+      </view>
+      <view class="dimension-list">
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">外向型 E</text>
+            <text class="dim-value">{{result.percent.E}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.E}}%; background: linear-gradient(90deg, #FFD700, #FFA500);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">内向型 I</text>
+            <text class="dim-value">{{result.percent.I}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.I}}%; background: linear-gradient(90deg, #9370DB, #8A2BE2);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">实感型 S</text>
+            <text class="dim-value">{{result.percent.S}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.S}}%; background: linear-gradient(90deg, #87CEEB, #4169E1);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">直觉型 N</text>
+            <text class="dim-value">{{result.percent.N}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.N}}%; background: linear-gradient(90deg, #98FB98, #32CD32);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">思考型 T</text>
+            <text class="dim-value">{{result.percent.T}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.T}}%; background: linear-gradient(90deg, #FF6B6B, #EE5A5A);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">情感型 F</text>
+            <text class="dim-value">{{result.percent.F}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.F}}%; background: linear-gradient(90deg, #FFB6C1, #FF69B4);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">判断型 J</text>
+            <text class="dim-value">{{result.percent.J}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.J}}%; background: linear-gradient(90deg, #DDA0DD, #BA55D3);"></view>
+          </view>
+        </view>
+        <view class="dimension-item">
+          <view class="dimension-label">
+            <text class="dim-name">知觉型 P</text>
+            <text class="dim-value">{{result.percent.P}}%</text>
+          </view>
+          <view class="dimension-bar">
+            <view class="bar-inner" style="width: {{result.percent.P}}%; background: linear-gradient(90deg, #87CEFA, #4682B4);"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 性格优势 -->
+    <view class="section-card card animate-fadeIn" wx:if="{{!isFun && result.strengths}}">
+      <view class="section-title">
+        <text class="icon">💪</text>
+        性格优势
+      </view>
+      <view class="section-list">
+        <view class="list-item" wx:for="{{result.strengths}}" wx:key="index">
+          <text class="item-bullet">•</text>
+          <text class="item-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 潜在短板 -->
+    <view class="section-card card animate-fadeIn" wx:if="{{!isFun && result.weaknesses}}">
+      <view class="section-title">
+        <text class="icon">📝</text>
+        成长建议
+      </view>
+      <view class="section-list">
+        <view class="list-item" wx:for="{{result.weaknesses}}" wx:key="index">
+          <text class="item-bullet">•</text>
+          <text class="item-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 适合职业 -->
+    <view class="section-card card animate-fadeIn" wx:if="{{!isFun && result.careers}}">
+      <view class="section-title">
+        <text class="icon">💼</text>
+        适合职业
+      </view>
+      <view class="tag-list">
+        <text class="tag" wx:for="{{result.careers}}" wx:key="index">{{item}}</text>
+      </view>
+    </view>
+    
+    <!-- 社交建议 -->
+    <view class="section-card card animate-fadeIn" wx:if="{{!isFun && result.social}}">
+      <view class="section-title">
+        <text class="icon">🤝</text>
+        社交特点
+      </view>
+      <view class="section-list">
+        <view class="list-item" wx:for="{{result.social}}" wx:key="index">
+          <text class="item-bullet">•</text>
+          <text class="item-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 名人/角色 -->
+    <view class="celebrity-card card animate-fadeIn" wx:if="{{!isFun && result.celebrities}}">
+      <view class="section-title">
+        <text class="icon">⭐</text>
+        同类型名人
+      </view>
+      <view class="celebrity-list">
+        <view class="celebrity-item" wx:for="{{result.celebrities}}" wx:key="index">
+          <text>{{item}}</text>
+        </view>
+      </view>
+      <view class="section-title mt-30">
+        <text class="icon">🎬</text>
+        代表角色
+      </view>
+      <view class="celebrity-list">
+        <view class="celebrity-item" wx:for="{{result.characters}}" wx:key="index">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 趣味测试毒舌文案 -->
+    <view class="fun-result-card card animate-fadeIn" wx:if="{{isFun && result.funHarsh}}">
+      <view class="section-title">
+        <text class="icon">🔮</text>
+        一句话毒舌
+      </view>
+      <view class="harsh-text">{{result.funHarsh}}</view>
+    </view>
+    
+    <!-- 趣味测试建议 -->
+    <view class="fun-result-card card animate-fadeIn" wx:if="{{isFun && result.funSuggestion}}">
+      <view class="section-title">
+        <text class="icon">💡</text>
+        真诚建议
+      </view>
+      <view class="suggestion-text">{{result.funSuggestion}}</view>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="action-buttons animate-fadeIn">
+      <button class="btn btn-primary btn-block" bindtap="saveResult">
+        <text>💾</text> 保存结果
+      </button>
+      <button class="btn btn-secondary btn-block" bindtap="shareResult">
+        <text>📤</text> 分享给好友
+      </button>
+      <button class="btn btn-outline btn-block" bindtap="retest">
+        <text>🔄</text> 重新测试
+      </button>
+    </view>
+    
+    <!-- 测试信息 -->
+    <view class="test-info">
+      <text>测试类型：{{testTypeName}}</text>
+      <text>测试时间：{{usedTime}}</text>
+    </view>
+  </view>
+</view>

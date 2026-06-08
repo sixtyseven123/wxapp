@@ -1,0 +1,82 @@
+<view class="container">
+  <!-- Logo区域 -->
+  <view class="logo-section">
+    <view class="logo-icon">🧠</view>
+    <view class="logo-name">人格实验室</view>
+    <view class="logo-version">版本 1.0.0</view>
+  </view>
+  
+  <!-- 功能入口 -->
+  <view class="menu-card card">
+    <view class="menu-item" bindtap="showContent" data-type="agreement">
+      <view class="menu-left">
+        <text class="menu-icon">📄</text>
+        <text class="menu-text">用户协议</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-divider"></view>
+    <view class="menu-item" bindtap="showContent" data-type="privacy">
+      <view class="menu-left">
+        <text class="menu-icon">🔒</text>
+        <text class="menu-text">隐私政策</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-divider"></view>
+    <view class="menu-item" bindtap="showContent" data-type="about">
+      <view class="menu-left">
+        <text class="menu-icon">ℹ️</text>
+        <text class="menu-text">关于我们</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-divider"></view>
+    <view class="menu-item" bindtap="contactUs">
+      <view class="menu-left">
+        <text class="menu-icon">📧</text>
+        <text class="menu-text">联系我们</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+  
+  <!-- 数据管理 -->
+  <view class="menu-card card">
+    <view class="menu-item" bindtap="clearData">
+      <view class="menu-left">
+        <text class="menu-icon">🗑️</text>
+        <text class="menu-text text-danger">清除所有数据</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+  
+  <!-- 免责声明 -->
+  <view class="disclaimer">
+    <view class="disclaimer-title">免责声明</view>
+    <view class="disclaimer-text">
+      人格实验室提供的测试结果仅供参考娱乐，不构成任何心理诊断或专业建议。如您感到心理困扰，请寻求专业心理咨询师或医生的帮助。
+    </view>
+  </view>
+  
+  <!-- 底部版权 -->
+  <view class="footer">
+    <view class="footer-text">人格实验室 © 2024</view>
+    <view class="footer-text">让每个人都能了解真实的自己</view>
+  </view>
+</view>
+
+<!-- 内容弹窗 -->
+<view class="modal {{showModal ? 'show' : ''}}" wx:if="{{showModal}}">
+  <view class="modal-mask" bindtap="closeModal"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <view class="modal-title">{{modalTitle}}</view>
+      <view class="modal-close" bindtap="closeModal">×</view>
+    </view>
+    <scroll-view class="modal-body" scroll-y>
+      <text>{{modalContent}}</text>
+    </scroll-view>
+  </view>
+</view>
