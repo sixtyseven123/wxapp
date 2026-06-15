@@ -1,6 +1,7 @@
 const app = getApp()
 const questions = require('../../utils/questions.js')
 const personality = require('../../utils/personality.js')
+const cloud = require('../../cloud/cloud.js')
 
 Page({
   data: {
@@ -181,13 +182,19 @@ Page({
   },
   
   // 计算结果并跳转
-  calculateAndNavigate() {
+  async calculateAndNavigate() {
+    console.log('===== 开始计算结果 =====')
     const { testType, answers, questions } = this.data
     
+    console.log('测试类型:', testType)
+    console.log('答题数量:', answers.length)
+    console.log('题目数量:', questions.length)
+    
     let result = {}
+    let score = {}
     
     if (testType === 'fun') {
-      // 趣味测试结果
+      console.log('计算趣味测试结果...')
       const funResult = personality.calculateFunResult(answers)
       result = {
         type: 'FUN',
@@ -199,7 +206,7 @@ Page({
         funSuggestion: funResult.suggestion
       }
     } else {
-      // MBTI测试结果
+      console.log('计算MBTI测试结果...')
       const mbtiResult = personality.calculateMBTI(answers, questions)
       const typeData = personality.getMBTIType(mbtiResult.type)
       
@@ -209,25 +216,58 @@ Page({
         percent: mbtiResult.percent,
         ...typeData
       }
+      score = mbtiResult.scores
     }
     
-    // 保存结果
     const testRecord = {
       type: testType,
       result: result,
       answers: answers,
       time: Date.now(),
-      usedTime: this.data.usedTime
+      usedTime: this.data.usedTime,
+      score: score
     }
     
-    // 保存到全局数据
+    console.log('测试记录已创建:', JSON.stringify(testRecord, null, 2))
+    
     app.globalData.currentTest = null
     app.addHistory(testRecord)
     
-    // 跳转到结果页
+    console.log('开始调用 saveToCloud...')
+    // 等待云端保存完成再跳转
+    await this.saveToCloud(testRecord)
+    console.log('saveToCloud 调用完成')
+    
+    console.log('跳转到结果页...')
     wx.redirectTo({
       url: '/pages/result/result'
     })
+    console.log('===== 计算结果完成 =====')
+  },
+  
+  // 保存到云端
+  async saveToCloud(record) {
+    console.log('===== 开始保存到云端 =====')
+    console.log('保存的数据:', JSON.stringify(record, null, 2))
+    try {
+      // 调用云函数保存记录
+      console.log('正在调用云函数 saveTestRecord...')
+      const res = await cloud.saveTestRecord({
+        type: record.type,
+        result: record.result,
+        usedTime: record.usedTime,
+        score: record.score
+      })
+      
+      if (res.success) {
+        console.log('云端保存成功:', res.recordId)
+      } else {
+        console.error('云端保存失败:', res.error)
+      }
+    } catch (e) {
+      console.error('保存到云端异常:', e)
+    }
+    console.log('===== 保存到云端结束 =====')
   },
   
   // 返回

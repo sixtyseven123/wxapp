@@ -1,8 +1,11 @@
 const app = getApp()
+const cloud = require('../../cloud/cloud.js')
 
 Page({
   data: {
-    history: []
+    history: [],
+    loading: false,
+    cloudAvailable: false
   },
   
   onShow() {
@@ -10,12 +13,47 @@ Page({
   },
   
   // 加载历史记录
-  loadHistory() {
-    const app = getApp()
-    const history = app.globalData.testHistory || []
+  async loadHistory() {
+    this.setData({ loading: true })
     
-    // 格式化时间
-    const formattedHistory = history.map(item => {
+    // 先加载本地历史
+    const localHistory = app.globalData.testHistory || []
+    
+    // 尝试从云端加载
+    try {
+      const res = await cloud.getCloudHistory(50)
+      if (res.success && res.data && res.data.length > 0) {
+        // 合并云端数据，去重
+        const cloudRecords = res.data.map(record => ({
+          ...record,
+          time: record.createTime ? new Date(record.createTime).getTime() : Date.now()
+        }))
+        
+        // 使用云端数据作为主要数据源
+        this.setData({ 
+          history: this.formatHistory(cloudRecords),
+          cloudAvailable: true,
+          loading: false
+        })
+        
+        // 同步到本地
+        app.saveHistory(cloudRecords)
+        return
+      }
+    } catch (e) {
+      console.error('从云端加载历史失败:', e)
+    }
+    
+    // 使用本地数据
+    this.setData({ 
+      history: this.formatHistory(localHistory),
+      loading: false
+    })
+  },
+  
+  // 格式化历史记录
+  formatHistory(history) {
+    return history.map(item => {
       const date = new Date(item.time)
       const now = new Date()
       const diff = now - date
@@ -38,8 +76,6 @@ Page({
         timeStr
       }
     })
-    
-    this.setData({ history: formattedHistory })
   },
   
   // 查看结果

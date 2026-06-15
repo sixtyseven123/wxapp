@@ -34,16 +34,27 @@
     "minifyWXSS": true,
     "showES6CompileOption": false,
     "minifyWXML": true,
-    "ignoreUploadUnusedFiles": true
+    "ignoreUploadUnusedFiles": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "enhance": false,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.25.0",
-  "appid": "your-appid",
+  "appid": "wxbef08d72600b4d24",
   "projectname": "MBTI人格实验室",
-  "miniprogramRoot": ".",
+  "miniprogramRoot": "./",
+  "cloudfunctionRoot": "cloudfunctions/",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "simulatorPluginLibVersion": {}
 }
