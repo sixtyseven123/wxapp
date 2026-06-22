@@ -46,7 +46,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.25.0",
+  "libVersion": "3.16.1",
   "appid": "wxbef08d72600b4d24",
   "projectname": "MBTI人格实验室",
   "miniprogramRoot": "./",

@@ -4,18 +4,91 @@
     <view class="header-title">测试记录</view>
     <view class="header-subtitle">共 {{history.length}} 条记录</view>
   </view>
-  
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-row">
+      <view class="filter-group">
+        <view class="filter-label">类型</view>
+        <view class="filter-options">
+          <view 
+            class="filter-option {{filterType === 'all' ? 'active' : ''}}"
+            bindtap="setFilterType"
+            data-type="all"
+          >
+            全部
+          </view>
+          <view 
+            class="filter-option {{filterType === 'mbti_full' ? 'active' : ''}}"
+            bindtap="setFilterType"
+            data-type="mbti_full"
+          >
+            MBTI标准
+          </view>
+          <view 
+            class="filter-option {{filterType === 'mbti_quick' ? 'active' : ''}}"
+            bindtap="setFilterType"
+            data-type="mbti_quick"
+          >
+            MBTI快速
+          </view>
+          <view 
+            class="filter-option {{filterType === 'fun' ? 'active' : ''}}"
+            bindtap="setFilterType"
+            data-type="fun"
+          >
+            趣味测试
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="filter-row">
+      <view class="filter-group">
+        <view class="filter-label">时间</view>
+        <view class="filter-options">
+          <view 
+            class="filter-option {{dateRange === 'all' ? 'active' : ''}}"
+            bindtap="setDateRange"
+            data-range="all"
+          >
+            全部时间
+          </view>
+          <view 
+            class="filter-option {{dateRange === 'today' ? 'active' : ''}}"
+            bindtap="setDateRange"
+            data-range="today"
+          >
+            今天
+          </view>
+          <view 
+            class="filter-option {{dateRange === 'week' ? 'active' : ''}}"
+            bindtap="setDateRange"
+            data-range="week"
+          >
+            本周
+          </view>
+          <view 
+            class="filter-option {{dateRange === 'month' ? 'active' : ''}}"
+            bindtap="setDateRange"
+            data-range="month"
+          >
+            本月
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <!-- 历史记录列表 -->
   <view class="history-list" wx:if="{{history.length > 0}}">
     <view 
       class="history-item card animate-fadeIn"
       wx:for="{{history}}"
-      wx:key="index"
-      bindtap="viewResult"
-      data-index="{{index}}"
+      wx:key="_id"
       style="animation-delay: {{index * 0.05}}s"
     >
-      <view class="item-left">
+      <view class="item-left" bindtap="viewResult" data-index="{{index}}">
         <view class="item-icon">
           <text wx:if="{{item.type === 'fun'}}">🎭</text>
           <text wx:else>{{item.result.icon || '🧠'}}</text>
@@ -33,23 +106,34 @@
           <view class="item-time">{{item.timeStr}}</view>
         </view>
       </view>
-      <view class="item-arrow">›</view>
+      
+      <!-- 操作按钮 -->
+      <view class="item-actions">
+        <view 
+          class="action-btn delete-btn" 
+          bindtap="showDeleteConfirm" 
+          data-index="{{index}}"
+          hover-class="action-btn-hover"
+        >
+          <text class="action-icon">🗑️</text>
+        </view>
+      </view>
     </view>
   </view>
-  
+
   <!-- 空状态 -->
-  <view class="empty-state" wx:if="{{history.length === 0}}">
-    <image src="/assets/images/empty-history.png" mode="aspectFit" wx:if="{{false}}"></image>
+  <view class="empty-state" wx:if="{{history.length === 0 && !loading}}">
     <view class="empty-icon">📜</view>
     <view class="empty-text">暂无测试记录</view>
     <view class="empty-hint">开始测试后，记录将显示在这里</view>
     <button class="btn btn-primary mt-40" bindtap="goToTest">开始测试</button>
   </view>
-  
+
   <!-- 清除按钮 -->
   <view class="clear-section" wx:if="{{history.length > 0}}">
     <button class="btn-clear" bindtap="showClearConfirm">
       <text>🗑️</text> 清除所有记录
     </button>
   </view>
-</view>
+
+  </view>

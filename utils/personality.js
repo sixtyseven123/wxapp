@@ -914,6 +914,93 @@ const funResults = {
   }
 }
 
+// 补充趣味人格测试结果
+const funResultsExtra = {
+  'AABB': {
+    tag: '社交变色龙',
+    emoji: '🦎',
+    title: '你能适应任何社交场合！',
+    desc: '你善于观察环境并调整自己的行为，在不同的人群中都能如鱼得水。你是真正的社交高手。',
+    harsh: '你似乎没有固定的自我，别人看到的你可能只是你想让他们看到的。',
+    suggestion: '试着在某些关系中展现真实的自己。'
+  },
+  'ABAC': {
+    tag: '理性浪漫者',
+    emoji: '🧠💖',
+    title: '你是矛盾的完美结合！',
+    desc: '你既有理性的头脑，又有浪漫的心灵。你用逻辑分析爱情，用感性体验生活。',
+    harsh: '你经常在理性和感性之间摇摆不定，连自己都不知道想要什么。',
+    suggestion: '有时候跟着感觉走也不错。'
+  },
+  'ACAB': {
+    tag: '时间管理大师',
+    emoji: '⏰',
+    title: '你是效率的化身！',
+    desc: '你把时间当作最宝贵的资源，善于规划和执行。你的每一天都过得充实而有意义。',
+    harsh: '你把生活过得像行军打仗，连吃饭都要掐着秒表。偶尔放松一下吧。',
+    suggestion: '学会享受过程，而不是只关注结果。'
+  },
+  'BABA': {
+    tag: '深度思考者',
+    emoji: '🕵️',
+    title: '你是行走的思想者！',
+    desc: '你喜欢深入思考问题，追求事物的本质。你是朋友中的"智慧担当"。',
+    harsh: '你想太多了，有时候简单的事情被你复杂化。行动比思考更重要。',
+    suggestion: '想到就去做，不要让想法只停留在脑海里。'
+  },
+  'BCAA': {
+    tag: '冒险探险家',
+    emoji: '🧗',
+    title: '你是勇敢的冒险者！',
+    desc: '你喜欢挑战自己，尝试新事物。你的人生充满了刺激和惊喜。',
+    harsh: '你的冒险精神可能让你忽视风险，有时候会让自己陷入困境。',
+    suggestion: '勇敢很好，但安全第一。'
+  },
+  'CBAC': {
+    tag: '创意天才',
+    emoji: '🎨',
+    title: '你是天生的艺术家！',
+    desc: '你有无限的创造力和想象力，善于用独特的方式表达自己。',
+    harsh: '你的创意很多，但执行力不足，很多想法都胎死腹中。',
+    suggestion: '把想法付诸实践，你会发现自己的潜力。'
+  },
+  'DBDB': {
+    tag: '治愈系天使',
+    emoji: '👼',
+    title: '你是温暖的小太阳！',
+    desc: '你善于倾听和安慰他人，是朋友的"心灵港湾"。你的存在让周围变得温暖。',
+    harsh: '你总是照顾别人，却忘了照顾自己。你的善意可能被人利用。',
+    suggestion: '学会爱自己，才能更好地爱别人。'
+  },
+  'ADBC': {
+    tag: '好奇心宝宝',
+    emoji: '🔬',
+    title: '你是永远的学习者！',
+    desc: '你对世界充满好奇，喜欢学习新知识。你的求知欲让你不断成长。',
+    harsh: '你学得多而不精，每个领域都懂一点但都不深入。',
+    suggestion: '选择一个领域深耕，你会收获更多。'
+  },
+  'BDAC': {
+    tag: '优雅生活家',
+    emoji: '☕',
+    title: '你是精致生活的追求者！',
+    desc: '你注重生活品质，懂得享受生活。你的每一天都过得优雅而从容。',
+    harsh: '你的精致可能有些矫情，让身边的人有压力。',
+    suggestion: '偶尔粗糙一下也很可爱。'
+  },
+  'CADB': {
+    tag: '自由灵魂',
+    emoji: '🦅',
+    title: '你是不受束缚的风！',
+    desc: '你追求自由，讨厌约束。你的人生信条是"做自己"。',
+    harsh: '你的自由可能伤害到关心你的人，有时候责任也很重要。',
+    suggestion: '自由和责任可以并存。'
+  }
+}
+
+// 合并趣味测试结果
+const allFunResults = { ...funResults, ...funResultsExtra }
+
 // 默认结果（用于没有匹配到精确结果时）
 const defaultFunResult = {
   tag: '混合人格',
@@ -1037,16 +1124,16 @@ function calculateFunResult(answers) {
   
   // 尝试匹配精确结果
   let key = sortedCounts.join('')
-  if (funResults[key]) {
-    return funResults[key]
+  if (allFunResults[key]) {
+    return allFunResults[key]
   }
   
   // 尝试前缀匹配
   for (let len = 4; len > 0; len--) {
     const prefix = key.substring(0, len)
-    const match = Object.keys(funResults).find(k => k.startsWith(prefix))
+    const match = Object.keys(allFunResults).find(k => k.startsWith(prefix))
     if (match) {
-      return funResults[match]
+      return allFunResults[match]
     }
   }
   

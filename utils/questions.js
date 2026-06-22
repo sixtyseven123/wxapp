@@ -897,11 +897,156 @@ const funQuestions = [
   }
 ]
 
+// MBTI 标准版补充题目（增加20题，使总题数达到113题）
+const mbtiExtraQuestions = [
+  // E/I 维度补充
+  {
+    id: 101,
+    dimension: 'EI',
+    text: '我喜欢成为团队的中心人物',
+    options: options
+  },
+  {
+    id: 102,
+    dimension: 'EI',
+    text: '我倾向于在独处时产生最好的想法',
+    options: options
+  },
+  {
+    id: 103,
+    dimension: 'EI',
+    text: '我经常组织朋友聚会或活动',
+    options: options
+  },
+  {
+    id: 104,
+    dimension: 'EI',
+    text: '我更愿意通过文字而不是当面交流',
+    options: options
+  },
+  {
+    id: 105,
+    dimension: 'EI',
+    text: '我享受在大庭广众面前演讲',
+    options: options
+  },
+  
+  // S/N 维度补充
+  {
+    id: 106,
+    dimension: 'SN',
+    text: '我更相信经验积累而不是灵光一现',
+    options: options
+  },
+  {
+    id: 107,
+    dimension: 'SN',
+    text: '我喜欢探索事物之间的联系和可能性',
+    options: options
+  },
+  {
+    id: 108,
+    dimension: 'SN',
+    text: '我容易被数据和事实说服',
+    options: options
+  },
+  {
+    id: 109,
+    dimension: 'SN',
+    text: '我经常产生新奇的想法和概念',
+    options: options
+  },
+  {
+    id: 110,
+    dimension: 'SN',
+    text: '我更喜欢按部就班的工作方式',
+    options: options
+  },
+  
+  // T/F 维度补充
+  {
+    id: 111,
+    dimension: 'TF',
+    text: '我倾向于根据原则而不是情绪做决定',
+    options: options
+  },
+  {
+    id: 112,
+    dimension: 'TF',
+    text: '我善于察觉他人的需求并给予帮助',
+    options: options
+  },
+  {
+    id: 113,
+    dimension: 'TF',
+    text: '我更关心事情的公平性而非人情',
+    options: options
+  },
+  {
+    id: 114,
+    dimension: 'TF',
+    text: '我容易与他人建立情感连接',
+    options: options
+  },
+  {
+    id: 115,
+    dimension: 'TF',
+    text: '我倾向于客观看待问题而非主观感受',
+    options: options
+  },
+  
+  // J/P 维度补充
+  {
+    id: 116,
+    dimension: 'JP',
+    text: '我喜欢在截止日期前完成任务',
+    options: options
+  },
+  {
+    id: 117,
+    dimension: 'JP',
+    text: '我享受随遇而安的生活方式',
+    options: options
+  },
+  {
+    id: 118,
+    dimension: 'JP',
+    text: '我倾向于提前规划假期行程',
+    options: options
+  },
+  {
+    id: 119,
+    dimension: 'JP',
+    text: '我喜欢保持选择的开放性',
+    options: options
+  },
+  {
+    id: 120,
+    dimension: 'JP',
+    text: '我难以忍受工作环境杂乱无章',
+    options: options
+  }
+]
+
+// 合并所有MBTI题目
+const allMbtiQuestions = [...mbtiFullQuestions, ...mbtiExtraQuestions]
+
+// 洗牌算法（Fisher-Yates）
+function shuffleArray(array) {
+  const arr = [...array]
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
+
 // 导出题库
 module.exports = {
   mbtiFullQuestions,
   mbtiQuickQuestions,
   funQuestions,
+  allMbtiQuestions,
   
   // 获取题库
   getQuestions(type) {
@@ -915,5 +1060,46 @@ module.exports = {
       default:
         return this.mbtiFullQuestions
     }
+  },
+  
+  // 获取随机题目（支持随机抽取指定数量的题目）
+  getRandomQuestions(type, count = null) {
+    let questions = []
+    
+    switch (type) {
+      case 'mbti_full':
+        questions = shuffleArray(this.allMbtiQuestions)
+        break
+      case 'mbti_quick':
+        questions = shuffleArray(this.mbtiQuickQuestions)
+        break
+      case 'fun':
+        questions = shuffleArray(this.funQuestions)
+        break
+      default:
+        questions = shuffleArray(this.allMbtiQuestions)
+    }
+    
+    return count ? questions.slice(0, count) : questions
+  },
+  
+  // 获取指定数量的随机题目（按维度均衡）
+  getBalancedRandomQuestions(count = 20) {
+    const eiQuestions = allMbtiQuestions.filter(q => q.dimension === 'EI')
+    const snQuestions = allMbtiQuestions.filter(q => q.dimension === 'SN')
+    const tfQuestions = allMbtiQuestions.filter(q => q.dimension === 'TF')
+    const jpQuestions = allMbtiQuestions.filter(q => q.dimension === 'JP')
+    
+    const perDimension = Math.floor(count / 4)
+    const extra = count % 4
+    
+    const selected = [
+      ...shuffleArray(eiQuestions).slice(0, perDimension + (extra > 0 ? 1 : 0)),
+      ...shuffleArray(snQuestions).slice(0, perDimension + (extra > 1 ? 1 : 0)),
+      ...shuffleArray(tfQuestions).slice(0, perDimension + (extra > 2 ? 1 : 0)),
+      ...shuffleArray(jpQuestions).slice(0, perDimension)
+    ]
+    
+    return shuffleArray(selected)
   }
 }
